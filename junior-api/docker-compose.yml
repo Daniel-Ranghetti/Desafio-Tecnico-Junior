@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    container_name: juniordb
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    image: postgres:16
+    container_name: juniordb_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: junior
+      POSTGRES_PASSWORD: senha123
+      POSTGRES_DB: juniorsdb
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
